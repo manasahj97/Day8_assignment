@@ -2,11 +2,8 @@ pipeline {
     agent {
         docker {
             image 'hashicorp/terraform:latest'
-            }
+        }
     }
-
-}
-
 
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY')
@@ -14,8 +11,6 @@ pipeline {
     }
 
     stages {
-       
-
         stage('Terraform Init') {
             steps {
                 sh 'terraform init'
@@ -34,4 +29,4 @@ pipeline {
             }
         }
     }
-
+}
