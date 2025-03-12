@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'hashicorp/terraform:latest'
-        }
-    }
+    agent any
 
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY')
@@ -13,19 +9,31 @@ pipeline {
     stages {
         stage('Terraform Init') {
             steps {
-                sh 'terraform init'
+                script {
+                    docker.image('hashicorp/terraform:latest').inside {
+                        sh 'terraform init'
+                    }
+                }
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -out=tfplan'
+                script {
+                    docker.image('hashicorp/terraform:latest').inside {
+                        sh 'terraform plan -out=tfplan'
+                    }
+                }
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply -auto-approve'
+                script {
+                    docker.image('hashicorp/terraform:latest').inside {
+                        sh 'terraform apply -auto-approve'
+                    }
+                }
             }
         }
     }
