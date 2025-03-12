@@ -1,10 +1,12 @@
 pipeline {
     agent {
         docker {
-            image 'hashicorp/terraform:1.6.0'
-            args '--entrypoint=""'  // Prevents issues with Terraform images
-        }
+            image 'hashicorp/terraform:latest'
+            }
     }
+
+}
+
 
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY')
